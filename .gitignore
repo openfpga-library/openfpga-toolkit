@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+# Build output for tests
+build/
+# Java build files
+.gradle/
+*.class
+# macOS
+.DS_Store
+# eslint sarif report
+eslint.sarif
+# for local incremental compilation
+tsconfig.tsbuildinfo
+# esbuild metadata file
+meta.json

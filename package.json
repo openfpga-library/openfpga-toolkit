@@ -1,0 +1,46 @@
+{
+  "name": "openfpga-toolkit",
+  "version": "0.0.1",
+  "private": true,
+  "description": "openFPGA Toolkit action",
+  "scripts": {
+    "_build_comment": "echo 'Run the full build so we typecheck the project and can reuse the transpiled files in npm test'",
+    "build": "./scripts/check-node-modules.sh && npm run transpile && node build.mjs",
+    "lint": "eslint --report-unused-disable-directives --max-warnings=0 .",
+    "lint-ci": "SARIF_ESLINT_IGNORE_SUPPRESSED=true eslint --report-unused-disable-directives --max-warnings=0 . --format @microsoft/eslint-formatter-sarif --output-file=eslint.sarif",
+    "lint-fix": "eslint --report-unused-disable-directives --max-warnings=0 . --fix",
+    "ava": "npm run transpile && ava --verbose",
+    "test": "npm run ava -- src/",
+    "test-debug": "npm run test -- --timeout=20m",
+    "transpile": "tsc --build --verbose tsconfig.json"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^2.0.3",
+    "@actions/github": "^9.1.1",
+    "@github/issue-parser": "^2.0.0",
+    "@octokit/core": "^7.0.8",
+    "@octokit/plugin-retry": "^8.1.1",
+    "openfpga-validator": "^0.7.0",
+    "undici": "^8.12.3"
+  },
+  "devDependencies": {
+    "@ava/typescript": "6.0.0",
+    "@eslint/compat": "^2.1.1",
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
+    "@octokit/types": "^18.0.0",
+    "@types/node": "^20.19.43",
+    "ava": "^6.4.1",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-github": "^6.1.2",
+    "eslint-plugin-import-x": "^4.17.1",
+    "eslint-plugin-jsdoc": "^65.2.0",
+    "eslint-plugin-no-async-foreach": "^0.1.1",
+    "glob": "^13.0.6",
+    "globals": "^17.13.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.1"
+  }
+}

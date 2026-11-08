@@ -1,0 +1,10 @@
+name: "openFPGA Toolkit: Validate Core"
+description: "Validates an openFPGA core."
+author: "Joshua Campbell"
+inputs:
+  zip-path:
+    description: "The path to the zip file containing the openFPGA core."
+    required: false
+runs:
+  using: node24
+  main: "../lib/validate-core-entry.js"
