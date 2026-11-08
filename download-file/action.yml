@@ -1,0 +1,20 @@
+name: "openFPGA Toolkit: Download File"
+description: "Downloads a release asset or content from a repository."
+author: "Joshua Campbell"
+inputs:
+  repository:
+    description: "The repository to download the release asset or content from."
+    required: true
+  output-path:
+    description: "The path to save the downloaded asset or content."
+    required: true
+  content-path:
+    description: "The path to the content to download from the repository."
+    required: false
+  asset-filter:
+    description: "The filter to select the release asset."
+    required: false
+    default: ".zip"
+runs:
+  using: node24
+  main: "../lib/download-file-entry.js"

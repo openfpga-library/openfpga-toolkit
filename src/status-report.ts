@@ -1,4 +1,5 @@
 export enum ActionName {
+  DownloadFile = "download-file",
   ParseIssue = "parse-issue",
   ValidateCore = "validate-core",
 }

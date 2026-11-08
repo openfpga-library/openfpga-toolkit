@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import { pipeline } from "node:stream/promises";
+
 import * as core from "@actions/core";
 import * as githubUtils from "@actions/github/lib/utils";
 import type { OctokitOptions } from "@octokit/core";
@@ -18,6 +21,9 @@ import {
   type GitHubApiDetails,
 } from "./github";
 import { Logger } from "./logging";
+import { RepositoryNwo } from "./repository";
+
+export type { GitHubApiDetails, GitHubApiCombinedDetails } from "./github";
 
 /**
  * HTTP status codes that should not be retried.
@@ -162,4 +168,69 @@ export function getAuthorizationHeaderFor(
 
   logger.debug(`Not using an authorization token.`);
   return undefined;
+}
+
+export async function getRepositoryReleases(repositoryNwo: RepositoryNwo) {
+  return await getApiClient().paginate("GET /repos/{owner}/{repo}/releases", {
+    owner: repositoryNwo.owner,
+    repo: repositoryNwo.repo,
+    per_page: 100,
+  });
+}
+
+export async function getReleaseAssets(
+  repositoryNwo: RepositoryNwo,
+  releaseId: number,
+) {
+  return await getApiClient().paginate(
+    "GET /repos/{owner}/{repo}/releases/{release_id}/assets",
+    {
+      owner: repositoryNwo.owner,
+      repo: repositoryNwo.repo,
+      release_id: releaseId,
+      per_page: 100,
+    },
+  );
+}
+
+export async function downloadReleaseAsset(
+  repositoryNwo: RepositoryNwo,
+  assetId: number,
+  outputPath: string,
+) {
+  const response = await getApiClient().rest.repos.getReleaseAsset({
+    owner: repositoryNwo.owner,
+    repo: repositoryNwo.repo,
+    asset_id: assetId,
+    headers: {
+      accept: "application/octet-stream",
+    },
+    request: {
+      parseSuccessResponseBody: false,
+    },
+  });
+
+  const stream = response.data as unknown as ReadableStream<Uint8Array>;
+  await pipeline(stream, fs.createWriteStream(outputPath));
+}
+
+export async function downloadContent(
+  repositoryNwo: RepositoryNwo,
+  contentPath: string,
+  outputPath: string,
+) {
+  const response = await getApiClient().rest.repos.getContent({
+    owner: repositoryNwo.owner,
+    repo: repositoryNwo.repo,
+    path: contentPath,
+    headers: {
+      accept: "application/vnd.github.raw+json",
+    },
+    request: {
+      parseSuccessResponseBody: false,
+    },
+  });
+
+  const stream = response.data as unknown as ReadableStream<Uint8Array>;
+  await pipeline(stream, fs.createWriteStream(outputPath));
 }
