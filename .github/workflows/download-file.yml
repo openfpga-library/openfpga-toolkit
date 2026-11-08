@@ -10,7 +10,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Download File
-        uses: ./../download-file
+        uses: ./download-file
         with:
           repository: "spacemen3/PDP-1"
           output-path: "${{ runner.temp }}/core.zip"
