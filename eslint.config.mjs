@@ -170,6 +170,15 @@ export default [
     },
   },
   {
+    files: ["src/environment.ts"],
+
+    // We allow `exportVariable` from `@actions/core` to be used in this file
+    // since it defines the wrapper around it that other modules use.
+    rules: {
+      "no-restricted-syntax": "off",
+    },
+  },
+  {
     files: ["**/*.ts", "**/*.js"],
 
     rules: {

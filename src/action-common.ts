@@ -5,7 +5,7 @@ import type { ApiClient } from "./api-client";
 import { Env, ReadOnlyEnv } from "./environment";
 import { getActionsLogger, Logger } from "./logging";
 import { getDisplayActionName, ActionName } from "./status-report";
-import { getEnv, getErrorMessage, wrapError } from "./util";
+import { getEnv, getErrorMessage } from "./util";
 
 /** Base state that is available to an Action on startup. */
 export interface BaseState {
