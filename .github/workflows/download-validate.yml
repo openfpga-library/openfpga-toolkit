@@ -1,4 +1,4 @@
-name: Download File
+name: Download & Validate
 
 on:
   workflow_dispatch:
@@ -9,8 +9,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Download File
+      - name: Download Core
         uses: ./download-file
         with:
           repository: "spacemen3/PDP-1"
           output-path: "${{ runner.temp }}/core.zip"
+      - name: Validate Core
+        uses: ./validate-core
+        with:
+          zip-path: "${{ runner.temp }}/core.zip"
