@@ -10,11 +10,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Download Core
+        id: download-core
         uses: ./download-file
         with:
           repository: "spacemen3/PDP-1"
-          output-path: "${{ runner.temp }}/core.zip"
       - name: Validate Core
         uses: ./validate-core
         with:
-          zip-path: "${{ runner.temp }}/core.zip"
+          zip-path: "${{ steps.download-core.outputs.file-path }}"

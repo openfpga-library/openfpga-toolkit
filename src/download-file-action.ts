@@ -1,3 +1,5 @@
+import * as path from "path";
+
 import * as core from "@actions/core";
 
 import { Action, ActionState, runInActions } from "./action-common";
@@ -56,14 +58,26 @@ async function run(action: ActionState<["Base", "Logger", "Env", "Actions"]>) {
     // Validate the repository NWO format before proceeding.
     const repositoryNwo = parseRepositoryNwo(repository);
 
-    if (contentPath) {
-      await api.downloadContent(repositoryNwo, contentPath, outputPath);
-      return;
-    }
+    let fileName: string;
+    let filePath: string;
 
-    const release = await getLatestRelease(repositoryNwo);
-    const asset = await getReleaseAsset(repositoryNwo, release.id, assetFilter);
-    await api.downloadReleaseAsset(repositoryNwo, asset.id, outputPath);
+    // If a content path is specified, download the content directly and exit.
+    if (contentPath) {
+      fileName = path.basename(contentPath);
+      filePath = path.join(outputPath, fileName);
+      await api.downloadContent(repositoryNwo, contentPath, filePath);
+    } else {
+      const release = await getLatestRelease(repositoryNwo);
+      const asset = await getReleaseAsset(
+        repositoryNwo,
+        release.id,
+        assetFilter,
+      );
+      fileName = asset.name;
+      filePath = path.join(outputPath, fileName);
+      await api.downloadReleaseAsset(repositoryNwo, asset.id, filePath);
+    }
+    core.setOutput("file-path", filePath);
   } catch (unwrappedError) {
     const error = wrapError(unwrappedError);
     const message = error.message;

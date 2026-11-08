@@ -10,8 +10,9 @@ inputs:
     description: "The repository to download the release asset or content from."
     required: true
   output-path:
-    description: "The path to save the downloaded asset or content."
-    required: true
+    description: "The directory to save the downloaded asset or content."
+    required: false
+    default: ${{ runner.temp }}
   content-path:
     description: "The path to the content to download from the repository."
     required: false
@@ -19,6 +20,9 @@ inputs:
     description: "The filter to select the release asset."
     required: false
     default: ".zip"
+outputs:
+  file-path:
+    description: "The path to the downloaded file."
 runs:
   using: node24
   main: "../lib/download-file-entry.js"
