@@ -8,9 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download File
         uses: ./download-file
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: "spacemen3/PDP-1"
           output-path: "${{ runner.temp }}/core.zip"
