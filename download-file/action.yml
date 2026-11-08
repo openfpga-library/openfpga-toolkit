@@ -2,6 +2,10 @@ name: "openFPGA Toolkit: Download File"
 description: "Downloads a release asset or content from a repository."
 author: "Joshua Campbell"
 inputs:
+  token:
+    description: "GitHub token to use for authenticating with this instance of GitHub."
+    required: false
+    default: ${{ github.token }}
   repository:
     description: "The repository to download the release asset or content from."
     required: true
