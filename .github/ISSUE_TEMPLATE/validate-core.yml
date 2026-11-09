@@ -1,6 +1,7 @@
 name: Validate Core
 description: Validate an existing openFPGA core
 title: "[Validate Core]: "
+labels: [new-core]
 body:
   - type: input
     id: repository
