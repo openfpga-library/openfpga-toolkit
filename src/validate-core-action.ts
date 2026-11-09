@@ -13,6 +13,8 @@ async function run(action: ActionState<["Base", "Logger", "Env", "Actions"]>) {
   try {
     const zipPath = actionsUtil.getRequiredInput("zip-path");
 
+    logger.info(`Processing zip file at path: ${zipPath}`);
+
     const result = await processZip(
       zipPath,
       { failOnWarnings: false, failOnRecommendations: false },
