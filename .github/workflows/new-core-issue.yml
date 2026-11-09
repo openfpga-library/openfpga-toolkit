@@ -41,7 +41,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
-          BODY: >
+          BODY: |
             Thank you for your contribution!
 
             Unfortunately, the validation of the core has failed. Please check the [details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) and try again.
