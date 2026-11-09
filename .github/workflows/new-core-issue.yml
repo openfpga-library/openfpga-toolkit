@@ -1,4 +1,4 @@
-name: Validate on Issue
+name: New Core Issue
 
 on:
   issues:
