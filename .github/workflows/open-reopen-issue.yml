@@ -2,11 +2,11 @@ name: Validate on Issue
 
 on:
   issues:
-    types: [opened, reopened]
+    types: [opened, reopened, labeled]
 
 jobs:
   process_issue:
-    if: github.event.label.name == 'new core'
+    if: contains(github.event.issue.labels.*.name, 'new core')
     runs-on: ubuntu-latest
     permissions:
       issues: write
