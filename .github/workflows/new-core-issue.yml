@@ -2,7 +2,7 @@ name: New Core Issue
 
 on:
   issues:
-    types: [opened, reopened, labeled]
+    types: [opened, reopened]
 
 jobs:
   process_issue:
