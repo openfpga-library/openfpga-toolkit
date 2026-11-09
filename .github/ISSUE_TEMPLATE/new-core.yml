@@ -1,6 +1,6 @@
-name: Validate Core
-description: Validate an existing openFPGA core
-title: "[Validate Core]: "
+name: New Core
+description: Add a new openFPGA core
+title: "[New Core]: "
 labels: ["new core"]
 body:
   - type: input
