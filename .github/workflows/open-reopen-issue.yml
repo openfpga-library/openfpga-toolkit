@@ -33,7 +33,7 @@ jobs:
         with:
           zip-path: "${{ steps.download-file.outputs.file-path }}"
 
-      - name: Create PR Comment
+      - name: Add Issue Comment
         if: failure()
         uses: actions/github-script@v7
         with:
