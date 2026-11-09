@@ -61,12 +61,15 @@ async function run(action: ActionState<["Base", "Logger", "Env", "Actions"]>) {
     let fileName: string;
     let filePath: string;
 
-    // If a content path is specified, download the content directly and exit.
+    // If a content path is specified, download the content directly.
     if (contentPath) {
       fileName = path.basename(contentPath);
       filePath = path.join(outputPath, fileName);
+      logger.info(`Downloading content "${fileName}" to ${filePath}`);
       await api.downloadContent(repositoryNwo, contentPath, filePath);
-    } else {
+    }
+    // Otherwise, download the latest release asset.
+    else {
       const release = await getLatestRelease(repositoryNwo);
       const asset = await getReleaseAsset(
         repositoryNwo,
@@ -75,6 +78,7 @@ async function run(action: ActionState<["Base", "Logger", "Env", "Actions"]>) {
       );
       fileName = asset.name;
       filePath = path.join(outputPath, fileName);
+      logger.info(`Downloading release asset "${fileName}" to ${filePath}`);
       await api.downloadReleaseAsset(repositoryNwo, asset.id, filePath);
     }
     core.setOutput("file-path", filePath);

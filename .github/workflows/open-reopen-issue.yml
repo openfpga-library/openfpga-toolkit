@@ -1,0 +1,32 @@
+name: Validate on Issue
+
+on:
+  issues:
+    types: [opened, reopened]
+
+jobs:
+  process_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Parse Issue
+        id: parse-issue
+        uses: ./parse-issue
+        with:
+          issue: "${{ github.event.issue.body }}"
+          template-path: ".github/ISSUE_TEMPLATE/validate-core.yml"
+
+      - name: Download Core
+        id: download-file
+        uses: ./download-file
+        with:
+          repository: "${{ fromJSON(steps.parse-issue.outputs.issue).repository }}"
+          asset-filter: "${{ fromJSON(steps.parse-issue.outputs.issue).asset-filter }}"
+          content-path: "${{ fromJSON(steps.parse-issue.outputs.issue).content-path }}"
+
+      - name: Validate Core
+        uses: ./validate-core
+        with:
+          zip-path: "${{ steps.download-file.outputs.file-path }}"

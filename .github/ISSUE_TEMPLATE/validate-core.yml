@@ -1,0 +1,36 @@
+name: Validate Core
+description: Validate an existing openFPGA core
+title: "[Validate Core]: "
+body:
+  - type: input
+    id: repository
+    attributes:
+      label: GitHub Repository
+      description: The GitHub repository where the openFPGA core is hosted.
+      placeholder: e.g. spiritualized1997/openFPGA-GB-GBC
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ### GitHub Release Options
+        ---
+        > [!NOTE]
+        > If the openFPGA core is distributed via GitHub releases as a *single* asset, no further options are required.
+  - type: input
+    id: asset-filter
+    attributes:
+      label: Asset Filter
+      description: Specify a RegEx pattern if the GitHub release contains multiple assets to narrow the selection.
+      placeholder: e.g. Spiritualized_GB_
+  - type: markdown
+    attributes:
+      value: |
+        ### Repository File Options
+        ---
+  - type: input
+    id: content-path
+    attributes:
+      label: Path
+      description: Specify the path to the file if the openFPGA core is distributed as a repository file.
+      placeholder: e.g. pocket/zips/jotego.jtcps1.zip

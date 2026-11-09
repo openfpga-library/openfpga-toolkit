@@ -33,7 +33,7 @@ async function run(action: ActionState<["Base", "Logger", "Env", "Actions"]>) {
     }
 
     const result = parseIssueForm(issue, template);
-    core.setOutput("result", JSON.stringify(result));
+    core.setOutput("issue", JSON.stringify(result));
   } catch (unwrappedError) {
     const error = wrapError(unwrappedError);
     const message = error.message;
