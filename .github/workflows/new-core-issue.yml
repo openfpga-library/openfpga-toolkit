@@ -19,7 +19,7 @@ jobs:
         uses: ./parse-issue
         with:
           issue: "${{ github.event.issue.body }}"
-          template-path: ".github/ISSUE_TEMPLATE/validate-core.yml"
+          template-path: ".github/ISSUE_TEMPLATE/new-core.yml"
 
       - name: Download Core
         id: download-file
